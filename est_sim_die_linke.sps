@@ -8,12 +8,13 @@
 /*******************************Daten einlesen*******************************
 
 GET
-    FILE='C:\Users\Marius\Desktop\Statistics\Projects\SPSS\Mikrosimulation ESt\Grundtabelle\est_grundtabelle.sav'.
+    FILE='C:\Users\Marius\Desktop\Statistics\Projects\SPSS\Mikrosimulation ESt\Splittingtabelle\est_splittingtabelle.sav'.
 DATASET NAME DataSet1 WINDOW=ASIS.
 
 /*Fortschreibung der monetären Größen bis 2020 mit der Annahme von 0,5% Geldentwertung pro Jahr*.
 
 COMPUTE zve_neu=zve * 1.095.
+COMPUTE zve_neu=zve_neu / 2.
 EXE.
 
 /***************Berechnung Einkommensteuertarif 2020 (Status Quo)*********************************.
@@ -28,15 +29,19 @@ DO IF (zve_neu LE 9408).
 ELSE IF (zve_neu GE 9169 AND zve_neu LE 14532).
     COMPUTE st20=(972.87 * y + 1400) * y.
     COMPUTE st20=TRUNC(st20).
+    COMPUTE st20=st20 * 2.
 ELSE IF (zve_neu GE 14533 AND zve_neu LE 57051).
     COMPUTE st20=(212.02 * z + 2397) * z + 972.79.
     COMPUTE st20=TRUNC(st20).
+    COMPUTE st20=st20 * 2.
 ELSE IF (zve_neu GE 57052 AND zve_neu LE 270500).
     COMPUTE st20=0.42 * x - 8963.74.
     COMPUTE st20=TRUNC(st20).
+    COMPUTE st20=st20 * 2.
 ELSE IF (zve_neu GE 270501).
     COMPUTE st20=0.45 * x - 17078.74.
     COMPUTE st20=TRUNC(st20).
+   COMPUTE st20=st20 * 2.
 END IF.
 EXE.
 
@@ -52,15 +57,19 @@ DO IF (zve_neu LE 12600).
 ELSE IF (zve_neu GE 12601 AND zve_neu LE 70000).
     COMPUTE st20_s=(339.72 * y_s + 1400) * y_s.
     COMPUTE st20_s=TRUNC(st20_s).
+    COMPUTE st20_s=st20_s * 2.
 ELSE IF (zve_neu GE 70001 AND zve_neu LE 259999).
-    COMPUTE st20_s=(184.21 * z_s + 5300) * z_s + 19228.42. /* Alternativ: 0.53 * (x_s - 70001) + 19228.42
+    COMPUTE st20_s=(184.21 * z_s + 5300) * z_s + 19228.42.
     COMPUTE st20_s=TRUNC(st20_s).
+    COMPUTE st20_s=st20_s * 2.
 ELSE IF (zve_neu GE 260000 AND zve_neu LE 999999).
     COMPUTE st20_s=0.6 * (x_s - 260000) + 186425.77.
     COMPUTE st20_s=TRUNC(st20_s).
+    COMPUTE st20_s=st20_s * 2.
 ELSE IF (zve_neu GE 1000000).
     COMPUTE st20_s=0.75 * (x_s - 1000000) + 630425.17.
     COMPUTE st20_s=TRUNC(st20_s).
+    COMPUTE st20_s=st20_s * 2.
 END IF.
 EXE.
 

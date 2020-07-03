@@ -8,7 +8,7 @@
 /*******************************Daten einlesen******************************
 
 GET
-    FILE='C:\Users\Marius\Desktop\Statistics\Projects\SPSS\Mikrosimulation ESt\Splittingtabelle\est_splittingtabelle.sav'.
+  FILE='C:\Users\Marius\Desktop\Statistics\Projects\SPSS\Mikrosimulation ESt\Splittingtabelle\est_splittingtabelle.sav'.
 DATASET NAME DataSet1 WINDOW=ASIS.
 
 /*Fortschreibung der monetären Größen bis 2020 mit der Annahme von 0,5% Geldentwertung pro Jahr*.
@@ -43,26 +43,19 @@ ELSE IF (zve_neu GE 270501).
     COMPUTE st20=TRUNC(st20).
    COMPUTE st20=st20 * 2.
 END IF.
-EXE.
+EXE
 
-**************Simulation Abschaffung Solidaritätszuschlag ab 2021*********************************.
+/***************Simulation Einkommensteuertarif (Flat Tax 28%)*********************************.
 
-DO IF (st20 LE 33912).
- COMPUTE soli=0.
- COMPUTE st20=st20 + soli.
-ELSE IF (st20 GE 33913 AND st20 LE 63056).
- COMPUTE soli=(st20 - 33912) * 0.119.
- COMPUTE st20=st20 + soli.
-ELSE IF (st20 GE 63057).
- COMPUTE soli=st20 * 0.055.
- COMPUTE st20=st20 + soli.
-END IF. 
-EXE.
+DO IF (sde LE 10000).
+    COMPUTE st20_s=0.
+ELSE IF (sde GE 10001).
+    COMPUTE st20_s=sde * 0.28.
+    COMPUTE st20_s=TRUNC(st20_s).
+END IF.
+    EXE.
 
-COMPUTE st20_s=st20 - soli.
-EXE.
-
-/***************************Analyse Steueraufkommen*************************************************.
+/***************************Analyse Steueraufkommen**********************************************.
 
 COMPUTE diff=st20_s - st20.
 EXE.

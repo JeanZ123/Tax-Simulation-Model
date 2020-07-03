@@ -8,12 +8,13 @@
 /*******************************Daten einlesen******************************
 
 GET
-  FILE='C:\Users\Marius\Desktop\Statistics\Projects\SPSS\Mikrosimulation ESt\Grundtabelle\est_grundtabelle.sav'.
+    FILE='C:\Users\Marius\Desktop\Statistics\Projects\SPSS\Mikrosimulation ESt\Splittingtabelle\est_splittingtabelle.sav'.
 DATASET NAME DataSet1 WINDOW=ASIS.
 
 /*Fortschreibung der monetären Größen bis 2020 mit der Annahme von 0,5% Geldentwertung pro Jahr*.
 
 COMPUTE zve_neu=zve * 1.095.
+COMPUTE zve_neu=zve_neu / 2.
 EXE.
 
 /***************Berechnung Einkommensteuertarif 2020 (Status Quo)*********************************.
@@ -28,27 +29,31 @@ DO IF (zve_neu LE 9408).
 ELSE IF (zve_neu GE 9169 AND zve_neu LE 14532).
     COMPUTE st20=(972.87 * y + 1400) * y.
     COMPUTE st20=TRUNC(st20).
+    COMPUTE st20=st20 * 2.
 ELSE IF (zve_neu GE 14533 AND zve_neu LE 57051).
     COMPUTE st20=(212.02 * z + 2397) * z + 972.79.
     COMPUTE st20=TRUNC(st20).
+    COMPUTE st20=st20 * 2.
 ELSE IF (zve_neu GE 57052 AND zve_neu LE 270500).
     COMPUTE st20=0.42 * x - 8963.74.
     COMPUTE st20=TRUNC(st20).
+    COMPUTE st20=st20 * 2.
 ELSE IF (zve_neu GE 270501).
     COMPUTE st20=0.45 * x - 17078.74.
     COMPUTE st20=TRUNC(st20).
+    COMPUTE st20=st20 * 2.
 END IF.
 EXE.
 
 **************Berechnung Solidaritätszuschlag 2020 (Status Quo)*********************************.
 
-DO IF (st20 LE 972).
+DO IF (st20 LE 1944).
  COMPUTE soli=0.
  COMPUTE st20=st20 + soli.
-ELSE IF (st20 GE 973 AND st20 LE 1339).
+ELSE IF (st20 GE 1945 AND st20 LE 2678).
  COMPUTE soli=(st20 - 972) * 0.2.
  COMPUTE st20=st20 + soli.
-ELSE IF (st20 GE 1340).
+ELSE IF (st20 GE 2679).
  COMPUTE soli=st20 * 0.055.
  COMPUTE st20=st20 + soli.
 END IF. 
@@ -59,13 +64,13 @@ EXE.
 COMPUTE st20_s=st20 - soli.
 EXE.
 
-DO IF (st20_s LE 16956).
+DO IF (st20_s LE 33912).
  COMPUTE soli_s=0.
  COMPUTE st20_s=st20_s + soli_s.
-ELSE IF (st20_s GE 16957 AND st20_s LE 31528).
- COMPUTE soli_s=(st20_s - 16957) * 0.119.
+ELSE IF (st20_s GE 33913 AND st20_s LE 63056).
+ COMPUTE soli_s=(st20_s - 33912) * 0.119.
  COMPUTE st20_s=st20_s + soli_s.
-ELSE IF (st20_s GE 31529).
+ELSE IF (st20_s GE 63057).
  COMPUTE soli_s=st20_s * 0.055.
  COMPUTE st20_s=st20_s + soli_s.
 END IF. 

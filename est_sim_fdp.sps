@@ -8,12 +8,13 @@
 /*******************************Daten einlesen*******************************
 
 GET
-    FILE='C:\Users\Marius\Desktop\Statistics\Projects\SPSS\Mikrosimulation ESt\Grundtabelle\est_grundtabelle.sav'.
+    FILE='C:\Users\Marius\Desktop\Statistics\Projects\SPSS\Mikrosimulation ESt\Splittingtabelle\est_splittingtabelle.sav'.
 DATASET NAME DataSet1 WINDOW=ASIS.
 
-/*Fortschreibung der monetären Größen bis 2020 mit der Annahme von 0,5% Geldentwertung pro Jahr*.
+/*Fortschreibung der monetären Größen von 2001 bis 2020 mit der Annahme von 0,5% Geldentwertung pro Jahr*.
 
 COMPUTE zve_neu=zve * 1.095.
+COMPUTE zve_neu=zve_neu / 2.
 EXE.
 
 /***************Berechnung Einkommensteuertarif 2020 (Status Quo)*********************************.
@@ -28,15 +29,19 @@ DO IF (zve_neu LE 9408).
 ELSE IF (zve_neu GE 9169 AND zve_neu LE 14532).
     COMPUTE st20=(972.87 * y + 1400) * y.
     COMPUTE st20=TRUNC(st20).
+    COMPUTE st20=st20 * 2.
 ELSE IF (zve_neu GE 14533 AND zve_neu LE 57051).
     COMPUTE st20=(212.02 * z + 2397) * z + 972.79.
     COMPUTE st20=TRUNC(st20).
+    COMPUTE st20=st20 * 2.
 ELSE IF (zve_neu GE 57052 AND zve_neu LE 270500).
     COMPUTE st20=0.42 * x - 8963.74.
     COMPUTE st20=TRUNC(st20).
+    COMPUTE st20=st20 * 2.
 ELSE IF (zve_neu GE 270501).
     COMPUTE st20=0.45 * x - 17078.74.
     COMPUTE st20=TRUNC(st20).
+   COMPUTE st20=st20 * 2.
 END IF.
 EXE.
 
@@ -52,15 +57,19 @@ DO IF (zve_neu LE 9408).
 ELSE IF (zve_neu GE 9409 AND zve_neu LE 15532).
     COMPUTE st20_s=(814.01 * y_s + 1400) * y_s.
     COMPUTE st20_s=TRUNC(st20_s).
+    COMPUTE st20_s=st20_s * 2.
 ELSE IF (zve_neu GE 15533 AND zve_neu LE 90000).
     COMPUTE st20_s=(121.06 * z_s + 2397) * z_s + 1162.64.
     COMPUTE st20_s=TRUNC(st20_s).
+    COMPUTE st20_s=st20_s * 2.
 ELSE IF (zve_neu GE 90001 AND zve_neu LE 270500).
     COMPUTE st20_s=0.42 * x_s – 12074.09.
     COMPUTE st20_s=TRUNC(st20_s).
+    COMPUTE st20_s=st20_s * 2.
 ELSE IF (zve_neu GE 270501).
     COMPUTE st20_s=0.45 * x_s – 20189.40.
     COMPUTE st20_s=TRUNC(st20_s).
+    COMPUTE st20_s=st20_s * 2.
 END IF.
 EXE.
 
@@ -72,14 +81,19 @@ EXE.
 WEIGHT OFF.
 WEIGHT BY SamplingWeight.
 
-DESCRIPTIVES VARIABLES=diff
+ * DESCRIPTIVES VARIABLES=diff
   /STATISTICS=SUM.
 
- * FREQUENCIES VARIABLES=diff
+FREQUENCIES VARIABLES=diff
     /FORMAT=NOTABLE
     /NTILES=10
     /STATISTICS=MEAN MEDIAN SUM
     /ORDER=ANALYSIS.
+
+ * FREQUENCIES VARIABLES=diff
+  /FORMAT=NOTABLE
+  /PERCENTILES=90 80 70 60 50 40 30 20 10 
+  /ORDER=ANALYSIS.
 
 /***********************************************************************************
 /*****************************Deskriptive Analyse*******************************
