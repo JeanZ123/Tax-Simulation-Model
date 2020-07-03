@@ -1,14 +1,14 @@
 ﻿* Encoding: UTF-8.
 *******************************************************************************
-    *******************************************************************************
-    ********Projekt Mikrosimulation von Einkommensteuerreformen********
-    *******************************************************************************
-    *******************************************************************************
+*******************************************************************************
+********Projekt Mikrosimulation von Einkommensteuerreformen********
+********************************************************************************
+********************************************************************************
 
-/*******************************Daten einlesen*******************************
+/*******************************Daten einlesen******************************
 
 GET
-    FILE='C:\Users\Marius\Desktop\Statistics\Projects\SPSS\Mikrosimulation ESt\Grundtabelle\est_grundtabelle.sav'.
+  FILE='C:\Users\Marius\Desktop\Statistics\Projects\SPSS\Mikrosimulation ESt\Grundtabelle\est_grundtabelle.sav'.
 DATASET NAME DataSet1 WINDOW=ASIS.
 
 /*Fortschreibung der monetären Größen bis 2020 mit der Annahme von 0,5% Geldentwertung pro Jahr*.
@@ -40,31 +40,38 @@ ELSE IF (zve_neu GE 270501).
 END IF.
 EXE.
 
-/***************Simulation Einkommensteuertarif (FDP)*********************************.
+**************Berechnung Solidaritätszuschlag 2020 (Status Quo)*********************************.
 
-COMPUTE y_s=(TRUNC(zve_neu) - 9408) / 10000.
-COMPUTE z_s=(TRUNC(zve_neu) - 15532) / 10000.
-COMPUTE x_s=TRUNC(zve_neu).
+DO IF (st20 LE 972).
+ COMPUTE soli=0.
+ COMPUTE st20=st20 + soli.
+ELSE IF (st20 GE 973 AND st20 LE 1339).
+ COMPUTE soli=(st20 - 972) * 0.2.
+ COMPUTE st20=st20 + soli.
+ELSE IF (st20 GE 1340).
+ COMPUTE soli=st20 * 0.055.
+ COMPUTE st20=st20 + soli.
+END IF. 
 EXE.
 
-DO IF (zve_neu LE 9408).
-    COMPUTE st20_s=0.
-ELSE IF (zve_neu GE 9409 AND zve_neu LE 15532).
-    COMPUTE st20_s=(814.01 * y_s + 1400) * y_s.
-    COMPUTE st20_s=TRUNC(st20_s).
-ELSE IF (zve_neu GE 15533 AND zve_neu LE 90000).
-    COMPUTE st20_s=(121.06 * z_s + 2397) * z_s + 1162.64.
-    COMPUTE st20_s=TRUNC(st20_s).
-ELSE IF (zve_neu GE 90001 AND zve_neu LE 270500).
-    COMPUTE st20_s=0.42 * x_s – 12074.09.
-    COMPUTE st20_s=TRUNC(st20_s).
-ELSE IF (zve_neu GE 270501).
-    COMPUTE st20_s=0.45 * x_s – 20189.40.
-    COMPUTE st20_s=TRUNC(st20_s).
-END IF.
+**************Simulation Reduktion Solidaritätszuschlag 2021*********************************.
+
+COMPUTE st20_s=st20 - soli.
 EXE.
 
-/***************************Analyse Steueraufkommen********************************.
+DO IF (st20_s LE 16956).
+ COMPUTE soli_s=0.
+ COMPUTE st20_s=st20_s + soli_s.
+ELSE IF (st20_s GE 16957 AND st20_s LE 31528).
+ COMPUTE soli_s=(st20_s - 16957) * 0.119.
+ COMPUTE st20_s=st20_s + soli_s.
+ELSE IF (st20_s GE 31529).
+ COMPUTE soli_s=st20_s * 0.055.
+ COMPUTE st20_s=st20_s + soli_s.
+END IF. 
+EXE.
+
+/***************************Analyse Steueraufkommen*************************************************.
 
 COMPUTE diff=st20_s - st20.
 EXE.
@@ -76,17 +83,17 @@ DESCRIPTIVES VARIABLES=diff
   /STATISTICS=SUM.
 
  * FREQUENCIES VARIABLES=diff
-    /FORMAT=NOTABLE
-    /NTILES=10
-    /STATISTICS=MEAN MEDIAN SUM
-    /ORDER=ANALYSIS.
+  /FORMAT=NOTABLE
+  /NTILES=10
+  /STATISTICS=MEAN MEDIAN SUM
+  /ORDER=ANALYSIS.
 
 /***********************************************************************************
 /*****************************Deskriptive Analyse*******************************
 
  * /************************Gewinn oder Überschuss********************************.
 
- * RECODE c65101 c65102 c65121 c65122 c65141 c65142 c65161 c65162 c65221 c65222 c65241 c65242 c65261
+ * RECODE c65101 c65102 c65121 c65122 c65141 c65142 c65161 c65162 c65221 c65222 c65241 c65242 c65261 
     c65262 (SYSMIS=0).
  * EXECUTE.
 
@@ -95,14 +102,14 @@ DESCRIPTIVES VARIABLES=diff
  * EXECUTE.
 
  * DO IF (gew GE ue).
- *     COMPUTE ea=1.
+ *  COMPUTE ea=1.
  * ELSE if (gew LT ue).
- *     COMPUTE ea=2.
+ *  COMPUTE ea=2.
  * END IF.
  * EXE.
 
  * MEANS TABLES=diff BY ea
-    /CELLS=COUNT MEAN MEDIAN SUM.
+  /CELLS=COUNT MEAN MEDIAN SUM.
 
 /************************************************************************************
 /*******************************Genderanalyse************************************
