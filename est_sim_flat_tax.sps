@@ -11,7 +11,7 @@ GET
   FILE='C:\Users\Marius\Desktop\Statistics\Projects\SPSS\Mikrosimulation_ESt\Grundtabelle\est_grundtabelle.sav'.
 DATASET NAME DataSet1 WINDOW=ASIS.
 
-/*Fortschreibung der monetären Größen bis 2020 mit der Annahme von 0,5% Geldentwertung pro Jahr*.
+/*Fortschreibung der monetären Größen bis 2020 auf der Grundlage des Inflationsindizes des Statistischen Bundesamts*.
 
 COMPUTE sde=c65309.
 COMPUTE zve=c65522.
