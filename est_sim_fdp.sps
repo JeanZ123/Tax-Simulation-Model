@@ -19,7 +19,7 @@ WEIGHT BY SamplingWeight.
 /********Descriptive analysis of the effects on the income distribution********
 /******************************************************************************
 
-/***************************Calculating the global tax revenue***********************
+/*********************Calculating the global tax revenue***********************
 
 COMPUTE diff=st20_s - st20.
 
@@ -79,7 +79,7 @@ AGGREGATE
 
 COMPUTE q_st20_s = g_st20_s / g_sde_neu.
 
-*****Same calculations as above for the 1%, 0.1% and 0.01% percentiles*****.
+/*****Same calculations as above for the 1%, 0.1% and 0.01% percentiles*****
 
 FREQUENCIES VARIABLES=sde_neu
     /FORMAT=NOTABLE
@@ -169,7 +169,7 @@ AGGREGATE
 
 COMPUTE q_einkommen_sek=p_einkommen_sek  /  g_einkommen_sek.
 
-/*Deciles indicating the distribution of the income tax burden*******.
+/*Deciles indicating the distribution of the income tax burden*******
 
 COMPUTE einkommen_sek = zve_neu - st20_s.
 SELECT IF einkommen_sek > 0.
