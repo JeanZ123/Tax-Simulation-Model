@@ -127,7 +127,7 @@ AGGREGATE
 COMPUTE q_st20_s = p_st20_s / p_sde_neu.	
 EXECUTE.
  
-/*Deciles indicating the distribution of the secondary income (income after taxes)*****.
+/*Deciles indicating the distribution of the secondary income (income after taxes)*****
 
 COMPUTE einkommen_sek = zve_neu - st20.
 SELECT IF einkommen_sek > 0.
