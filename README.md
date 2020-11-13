@@ -9,4 +9,4 @@ Calculations are made for five reform scenarios:
 4. Reduction of the German Solidarity Tax (Solidaritätszuschlag)
 5. Abolition of the German Solidarity Tax
 
-Calculations are based on the 10%-sample of the income tax dataset produced by the German Statistical Bureau (see: https://www.forschungsdatenzentrum.de/de/10-21242-73111-2014-00-00-3-1-0)
+Calculations are based on the 10%-sample of the income tax database (with a total of 4 mio. data rows) produced by the German Statistical Bureau (see: https://www.forschungsdatenzentrum.de/de/10-21242-73111-2014-00-00-3-1-0)
