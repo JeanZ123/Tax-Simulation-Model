@@ -1,29 +1,22 @@
-﻿* Encoding: UTF-8.
-*******************************************************************************
-*******************************************************************************
-    ********Projekt Mikrosimulation von Einkommensteuerreformen********
-    *******************************************************************************
-    *******************************************************************************
+Encoding: UTF-8.
 
-/*******************************Daten einlesen*******************************
+*******************************************************************************
+*******************************************************************************
+*************Simulation of the FDP income tax reform for 2020 (Gastronomy)*****
+*******************************************************************************
+*******************************************************************************
+
+/*******************************Read in dataset********************************
 
 GET
-    FILE='C:\Users\Marius\Desktop\Statistics\Projects\SPSS\Mikrosimulation_ESt\Gesamttabelle\Berufe & Gewerbe\est_sim_fdp_gastgewerbe.sav'.
+    FILE='"...".sav'.
 DATASET NAME DataSet1 WINDOW=ASIS.
 
-/*Fortschreibung der monetären Größen bis 2020 aufgrund des Inflationsindex des Statistischen Bundesamts*.
+/********************************************************************************
+/*****************************Descriptive analysis*******************************
+/********************************************************************************
 
-COMPUTE sde=c65309.
-COMPUTE zve=c65522.
-COMPUTE zve_neu=zve * 1.07029.
-COMPUTE sde_neu=sde * 1.07029.
-COMPUTE zve_neu=TRUNC(zve_neu).
-
-/***********************************************************************************
-/*****************************Deskriptive Analyse*******************************
-/***********************************************************************************
-
-/***************************Anteil der Einkommensteuer am Bruttoeinkommen************************
+/*Deciles indicating the percentage of the income tax burden relative to the gross income (market income)**
 
 WEIGHT OFF.
 WEIGHT BY SamplingWeight.
@@ -79,9 +72,7 @@ AGGREGATE
 
 COMPUTE q_st20_s = g_st20_s / g_sde_neu.
 
-***************************Analyse 10%-Einkommensperzentile****************
-
-/***************************Sekundäre Einkommensverteilung*******************
+/*Deciles indicating the secondary income distribution*******************
 
 WEIGHT OFF.
 WEIGHT BY SamplingWeight.
@@ -128,7 +119,7 @@ AGGREGATE
 COMPUTE q_einkommen_sek=p_einkommen_sek  /  g_einkommen_sek.
 EXE.
 
-/***************************Verteilung Steuerlast************************
+/*Deciles indicating the distribution of the income tax burden************************
 
 WEIGHT OFF.
 WEIGHT BY SamplingWeight.
@@ -171,25 +162,3 @@ AGGREGATE
     /p_st20_s = SUM(st20_s).
 
 COMPUTE q_st20_s=p_st20_s / g_st20_s.
-
-/***************************Analyse Einkommensmillionäre************************
-
-/***************************Verteilung Steuerlast************************************
-
-WEIGHT OFF.
-WEIGHT BY SamplingWeight.
-
-AGGREGATE
-    /OUTFILE=*MODE=ADDVARIABLES OVERWRITE=YES
-    /BREAK=
-    /g_st20_s = SUM(st20_s).
-
-COMPUTE filter=(zve_neu GE 1000000).
-VALUE LABELS filter 0 'Restliche Einkommensgruppen' 1 'Einkommensmillionäre'.
-
-AGGREGATE
-    /OUTFILE=*MODE=ADDVARIABLES OVERWRITE=YES
-    /BREAK=filter
-    /p_st20_s = SUM(st20_s).
-
-COMPUTE anteil=p_st20_s / g_st20_s.
