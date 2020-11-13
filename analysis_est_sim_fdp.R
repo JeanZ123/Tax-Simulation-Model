@@ -6,14 +6,14 @@ library(dplyr)
 
 est_sim <-
   read.csv2(
-    "C:/Users/Marius/Desktop/Statistics/Projects/SPSS/Mikrosimulation_ESt/Gesamttabelle/est_sim_fdp.csv"
+    ""...".csv"
   )
 
 names(est_sim)[1] <- "SamplingWeight"
 est_sim <- round(est_sim)
 View(est_sim)
  
-# Weigh cases by sampling weight
+# Weight cases by sampling weight
 
 est_sim <- est_sim * est_sim$SamplingWeight
 
