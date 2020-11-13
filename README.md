@@ -1,5 +1,5 @@
 # Tax-Simulation-Model
-The SPSS syntax files found in this repository are part of an academic project for simulating the distributional effects of reforms of the German income tax system on different subgroups of the population.
+The SPSS and R syntax files found in this repository are part of an academic project for simulating the distributional effects of reforms of the German income tax system on different subgroups of the population.
 
 Calculations are made for five reform scenarios:
 
