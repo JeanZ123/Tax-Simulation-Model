@@ -5,10 +5,10 @@ library(dplyr)
 # Load datasets
 
 hbrutto <-
-  read_sav(""...".sav")
+  read_sav("C:/Users/.../Datasets/SOEP/pequiv.sav")
 
 wealth <-
-  read_sav("C:/Users/Marius/Desktop/Statistics/Datasets/SOEP/pwealth_weight.sav")
+  read_sav("C:/Users/.../Datasets/SOEP/pwealth_weight.sav")
 
 # Weight cases by sampling weight
 
