@@ -29,7 +29,7 @@ gini_pretax <- Gini(hbrutto$equiv, corr = FALSE, na.rm = TRUE)
 
 # Calculate inequality measures for wealth
 
-# Weigh cases by sampling weight
+# Weight cases by sampling weight
 
 est_sim <- est_sim * est_sim$biphrf
 
