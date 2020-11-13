@@ -1,33 +1,32 @@
-﻿* Encoding: UTF-8.
 Encoding: UTF-8.
 
 *******************************************************************************
-    *******************************************************************************
-    ********Projekt Mikrosimulation von Einkommensteuerreformen********
-    ********************************************************************************
-    ********************************************************************************
+*******************************************************************************
+************Simulation of the DIE LINKE income tax reform for 2020*************
+*******************************************************************************
+*******************************************************************************
 
-/*******************************Daten einlesen******************************
+/*******************************Read in Dataset********************************
 
 GET
-    FILE='C:\Users\Marius\Desktop\Statistics\Projects\SPSS\Mikrosimulation_ESt\Gesamttabelle\Berufe & Gewerbe\est_sim_flat_tax_gesundheit.sav'.
+    FILE='"...".sav'.
 DATASET NAME DataSet1 WINDOW=ASIS.
 
 WEIGHT OFF.
 WEIGHT BY SamplingWeight.
 
-/***********************************************************************************
-/*****************************Deskriptive Analyse*******************************
-/***********************************************************************************
+/******************************************************************************
+/********Descriptive analysis of the effects on the income distribution********
+/******************************************************************************
 
-/***************************Analyse Steueraufkommen*************************
+/*********************Calculating the global tax revenue***********************
 
 COMPUTE diff=st20_s - st20.
 
 DESCRIPTIVES VARIABLES=diff
     /STATISTICS=SUM.
 
-/***************************Anteil der Einkommensteuer am Bruttoeinkommen************************
+/*Deciles indicating the income tax burden as a percentage of the gross income**
 
 FREQUENCIES VARIABLES=sde_neu
     /FORMAT=NOTABLE
@@ -80,8 +79,7 @@ AGGREGATE
 
 COMPUTE q_st20_s = g_st20_s / g_sde_neu.
 
-
-*****************************************************.
+/*****Same calculations as above for the 1%, 0.1% and 0.01% percentiles*****
 
 FREQUENCIES VARIABLES=sde_neu
     /FORMAT=NOTABLE
@@ -127,7 +125,8 @@ AGGREGATE
 
 COMPUTE q_st20_s = p_st20_s / p_sde_neu.	
 EXECUTE.
-/***************************Sekundäre Einkommensverteilung*******************
+
+/*Deciles indicating the distribution of the secondary income (income after taxes)*****
 
 COMPUTE einkommen_sek = zve_neu - st20_s.
 SELECT IF einkommen_sek > 0.
@@ -171,7 +170,7 @@ AGGREGATE
 COMPUTE q_einkommen_sek=p_einkommen_sek  /  g_einkommen_sek.
 EXECUTE.
 
-/***************************Verteilung Steuerlast************************
+/*Deciles indicating the distribution of the income tax burden*******
 
 COMPUTE einkommen_sek = zve_neu - st20_s.
 SELECT IF einkommen_sek > 0.
@@ -209,4 +208,5 @@ AGGREGATE
     /p_st20_s = SUM(st20_s).
 
 COMPUTE q_st20_s=p_st20_s / g_st20_s.
+
 EXECUTE.
