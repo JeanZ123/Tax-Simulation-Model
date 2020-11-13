@@ -5,7 +5,7 @@ library(dplyr)
 # Load datasets
 
 hbrutto <-
-  read_sav("C:/Users/Marius/Desktop/Statistics/Datasets/SOEP/pequiv.sav")
+  read_sav(""...".sav")
 
 wealth <-
   read_sav("C:/Users/Marius/Desktop/Statistics/Datasets/SOEP/pwealth_weight.sav")
