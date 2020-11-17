@@ -10,3 +10,7 @@ Calculations are made for five reform scenarios:
 5. Abolition of the German Solidarity Tax
 
 Calculations are based on the 10%-sample of the income tax database (with a total of approx. 4 mio. data rows and over 1,000 variables) produced by the German Statistical Bureau (see: https://www.forschungsdatenzentrum.de/de/10-21242-73111-2014-00-00-3-1-0)
+
+A quick note on the calculations made:
+
+The tax reform simulations were each done for the two taxation schemes of the dualistic German taxation system, i.e. the "Grundtabelle" and the "Splittingtabelle". (Note: The two taxation schemes differ in their taxation of incomes from single vs. married households). However, the distributive effects of the reforms were calculated and analysed for the complete sample using descriptive analyses commonly used in measuring income (in-)equality (e.g. percentile analyses and common distribution measures such as the Gini coefficient, the Palma Ratio etc.).
